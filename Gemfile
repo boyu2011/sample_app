@@ -29,3 +29,10 @@ gem 'sqlite3'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+# added by bob
+
+gem 'rake', '>=0.9.2'
+
+
+
