@@ -34,5 +34,7 @@ gem 'sqlite3'
 
 gem 'rake', '>=0.9.2'
 
+gem 'gravatar_image_tag', '0.1.0'
+
 
 
