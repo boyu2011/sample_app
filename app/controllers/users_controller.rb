@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 
 	before_filter :authenticate, :only => [:edit, :update]
 	before_filter :correct_user, :only => [:edit, :update]
+	before_filter :admin_user, :only => :destroy
 
 	# GET "users"
 	def index
@@ -11,10 +12,10 @@ class UsersController < ApplicationController
 
 
 	# GET "users/new" ("/signup")
-  def new
+	def new
 		@user = User.new
 		@title = "Sign up"
-  end
+	end
 
 	# GET "users/id"
 	def show
@@ -37,12 +38,14 @@ class UsersController < ApplicationController
 
 	# GET "users/id/edit"
 	def edit
-		@user = User.find(params[:id])
+		# this sentence is an option because it was called by before_filter :correct_user
+		#@user = User.find(params[:id])
 		@title = "Edit user"
 	end
 
 	def update
-		@user = User.find(params[:id])
+		# this sentence is an option because it was called by before_filter :correct_user
+		#@user = User.find(params[:id])
 
 		if @user.update_attributes(params[:user])
 			# it worked
@@ -51,6 +54,12 @@ class UsersController < ApplicationController
 			@title = "Edit user"
 			render 'edit'
 		end
+	end
+	
+	def destroy
+		User.find(params[:id]).destroy
+		redirect_to users_path, :flash => { :success => "user destroyed."}
+		
 	end
 
 	private
@@ -63,4 +72,13 @@ class UsersController < ApplicationController
 			@user = User.find(params[:id])
 			redirect_to (root_path) unless @user == current_user
 		end
+		
+		def admin_user
+			user = User.find(params[:id])
+			redirect_to(root_path) unless current_user.admin?
+		end
 end
+
+
+
+
