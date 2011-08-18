@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
 
 	# just stored in the memory
 	attr_accessor :password
-	attr_accessible :name, :email, :password, :password_confirmation
+	# must have???
+	#attr_accessible :name, :email, :password, :password_confirmation
 	
 	has_many :microposts
 
