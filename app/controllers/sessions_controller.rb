@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   
 	def new
 		@title = "Sign in"
-  end
+  	end
 
 	# POST /sessions
 	# create a new session
