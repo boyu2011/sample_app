@@ -15,7 +15,7 @@ class MicropostsController < ApplicationController
 		
 	end
 	
-	def authenticate
-	end
+	#def authenticate
+	#end
 	
 end
