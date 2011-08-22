@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-	before_filter :authenticate, :only => [:edit, :update]
+	before_filter :authenticate, :except => [:show, :new, :create]
 	before_filter :correct_user, :only => [:edit, :update]
 	before_filter :admin_user, :only => :destroy
 
@@ -22,6 +22,20 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@microposts = @user.microposts
 		@title = @user.name
+	end
+	
+	def following
+		@title = "Following"
+		@user = User.find(params[:id])
+		@users = @user.following.paginate(:page => params[:page])
+		render 'show_follow'
+	end
+	
+	def followers
+		@title = "Following"
+		@user = User.find(params[:id])
+		@users = @user.followers.paginate(:page => params[:page])
+		render 'show_follow'
 	end
 
 	# POST "users/"
@@ -64,9 +78,7 @@ class UsersController < ApplicationController
 	end
 
 	private
-
-		
-
+	
 		def correct_user
 			@user = User.find(params[:id])
 			redirect_to (root_path) unless @user == current_user

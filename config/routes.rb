@@ -1,5 +1,7 @@
 SampleApp::Application.routes.draw do
 
+	# following_user_path
+	# followers_user_path
 	resources :users do
 		member do
 			get :following, :followers
