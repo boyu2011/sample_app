@@ -33,13 +33,21 @@ class User < ActiveRecord::Base
 						 :length => { :within => 6..40 }
 
 	before_save :encrypt_password
+	
+	# User.admin
+	scope :admin, where(:admin => true)
 
 	def has_password?(submitted_password)
 		encrypted_password == encrypt(submitted_password)
 	end
 	
+	# User.first.feed
+	# ==>
+	# SELECT "microposts".* FROM "microposts" WHERE (user_id IN (SELECT followed_id FROM relationships 
+	#	WHERE follower_id = 1) OR user_id = 1) ORDER BY microposts.created_at DESC
 	def feed
-		Micropost.where("user_id = ?", id)
+		Micropost.from_users_followed_by(self)
+		
 	end
 	
 	def following?(followed)
