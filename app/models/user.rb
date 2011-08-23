@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 	# just stored in the memory
 	attr_accessor :password
 	# must have???
-	#attr_accessible :name, :email, :password, :password_confirmation
+	attr_accessible :name, :email, :password, :password_confirmation
 	
 	has_many :microposts, 	         :dependent => :destroy
 	
@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
 	before_save :encrypt_password
 	
 	# User.admin
-	scope :admin, where(:admin => true)
+	#scope :admin, where(:admin => true)
 
 	def has_password?(submitted_password)
 		encrypted_password == encrypt(submitted_password)
@@ -47,7 +47,6 @@ class User < ActiveRecord::Base
 	#	WHERE follower_id = 1) OR user_id = 1) ORDER BY microposts.created_at DESC
 	def feed
 		Micropost.from_users_followed_by(self)
-		
 	end
 	
 	def following?(followed)

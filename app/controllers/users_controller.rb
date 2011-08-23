@@ -10,7 +10,6 @@ class UsersController < ApplicationController
 		@title = "All users"
 	end
 
-
 	# GET "users/new" ("/signup")
 	def new
 		@user = User.new
@@ -32,7 +31,7 @@ class UsersController < ApplicationController
 	end
 	
 	def followers
-		@title = "Following"
+		@title = "Followers"
 		@user = User.find(params[:id])
 		@users = @user.followers.paginate(:page => params[:page])
 		render 'show_follow'
@@ -44,7 +43,7 @@ class UsersController < ApplicationController
 		if @user.save
 			# handle a successful save.
 			sign_in @user
-			redirect_to user_path(@user), :flash => { :success => "Welcome to the Sample App!"}
+			redirect_to @user, :flash => { :success => "Welcome to the Sample App!"}
 		else 
 			@title = "Sign up"
 			render 'new'
@@ -74,7 +73,6 @@ class UsersController < ApplicationController
 	def destroy
 		User.find(params[:id]).destroy
 		redirect_to users_path, :flash => { :success => "user destroyed."}
-		
 	end
 
 	private
@@ -86,7 +84,7 @@ class UsersController < ApplicationController
 		
 		def admin_user
 			user = User.find(params[:id])
-			redirect_to(root_path) unless current_user.admin?
+			redirect_to(root_path) if !current_user.admin? || current_user?(@user)
 		end
 end
 

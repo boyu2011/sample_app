@@ -5,13 +5,12 @@
 	<%= render 'fields', :f => f %>
 
 	<div class="actions">
-		<%= f.submit 'Update' %><br />
+		<%= f.submit 'Update' %><br /><br />
 	</div>
-	
 <% end %>
-
 
 <div>
 	<%= gravatar_for @user %>
-	<a href="http://gravatar.com/emails" target=_blank>change</a>
+	<a href="http://gravatar.com/emails" target=_blank>Change your image</a>
+	<p>[Gravatar is an image that follows you from site to site appearing beside your name when you do things like comment or post on a blog]</p>
 </div>
